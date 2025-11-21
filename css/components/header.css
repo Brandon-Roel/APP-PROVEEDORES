@@ -1,0 +1,111 @@
+/* Header Principal */
+.header {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-fixed);
+    height: 70px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo - MODIFICADO: Solo texto */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+/* QUITADO: .company-logo del header */
+
+.logo h1 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+/* Información de usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--gray-700);
+    font-weight: 500;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+}
+
+/* Header específico para admin */
+.admin-header {
+    background: linear-gradient(135deg, var(--color-admin), #3730a3);
+    border-bottom: none;
+    box-shadow: var(--shadow-md);
+    left: 0;
+    right: 0;
+}
+
+.admin-header .logo h1 {
+    color: var(--white);
+}
+
+.admin-header .user-info {
+    color: var(--white);
+}
+
+.admin-header .user-avatar {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0 var(--space-lg);
+    }
+    
+    .logo h1 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .user-info span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content {
+        padding: 0 var(--space-md);
+    }
+    
+    .logo {
+        gap: var(--space-sm);
+    }
+    
+    .logo h1 {
+        font-size: var(--font-size-base);
+    }
+}

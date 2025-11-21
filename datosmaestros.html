@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP - PROVEEDORES</title>
+    
+    <!-- CSS Base -->
+    <link rel="stylesheet" href="css/base/reset.css">
+    <link rel="stylesheet" href="css/base/variables.css">
+    <link rel="stylesheet" href="css/base/typography.css">
+    <link rel="stylesheet" href="css/base/utilities.css">
+    
+    <!-- CSS Components -->
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/sidebar.css">
+    <link rel="stylesheet" href="css/components/table.css">
+    <link rel="stylesheet" href="css/components/modal.css">
+    <link rel="stylesheet" href="css/components/forms.css">
+    <link rel="stylesheet" href="css/components/cards.css">
+    <link rel="stylesheet" href="css/components/filters.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    
+    <!-- CSS Layouts -->
+    <link rel="stylesheet" href="css/layouts/dashboard.css">
+    <link rel="stylesheet" href="css/layouts/admin.css">
+    
+    <!-- CSS Pages -->
+    <link rel="stylesheet" href="css/pages/welcome.css">
+    
+    <!-- CSS Utils -->
+    <link rel="stylesheet" href="css/utils/responsive.css">
+</head>
+<body class="admin-dashboard">
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-container">
+            <div class="welcome-logo">
+                <img src="assets/images/gonac.png" alt="Gonac Logo">
+            </div>
+            <div class="welcome-content">
+                <h1 id="welcomeMessage">Bienvenido</h1>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aplicación Principal (oculta inicialmente) -->
+    <div id="mainApp" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="header admin-header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>APP - PROVEEDORES</h1>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">Brandon Roel Martinez Rivas</span>
+                    <div class="user-avatar" id="user-avatar">B</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layout Principal -->
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <nav class="sidebar admin-sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-container">
+                        <img src="assets/images/gonac.png" alt="Gonac" class="company-logo">
+                        <div class="company-area">DATOS MAESTROS</div>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <!-- NUEVO: Botón Inicio -->
+                    <li class="nav-item active" data-tab="inicio">
+                        🏠 Inicio
+                    </li>
+                    <li class="nav-item" data-tab="solicitudes">
+                        📋 Visualizar Solicitudes
+                    </li>
+                    <li class="nav-item" data-tab="proveedores">
+                        👥 Proveedores Activos
+                    </li>
+                    <li class="nav-item" data-tab="configuracion">
+                        ⚙️ Configuración
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Contenido Principal -->
+            <main class="dashboard-main">
+                <div class="dashboard-content">
+                    <!-- Banner de Bienvenida -->
+                    <div class="welcome-banner">
+                        <div class="welcome-content">
+                            <h2 id="personalWelcomeTitle">¡Bienvenido Administrador Sistema!</h2>
+                            <p>Gestiona las solicitudes de proveedores y mantén actualizada la información del sistema</p>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Acciones Principales -->
+                    <div class="main-actions-panel" id="mainActionsPanel">
+                        <div class="actions-grid">
+                            <button class="action-card" id="btnCrearSolicitudMain">
+                                <div class="action-icon">📝</div>
+                                <div class="action-title">Crear Solicitud de Prueba</div>
+                                <div class="action-description">Crear una nueva solicitud de prueba para proveedores</div>
+                            </button>
+
+                            <button class="action-card" id="btnActualizarMain">
+                                <div class="action-icon">🔄</div>
+                                <div class="action-title">Actualizar Lista</div>
+                                <div class="action-description">Actualizar y refrescar la lista de solicitudes</div>
+                            </button>
+
+                            <button class="action-card" id="btnVerSolicitudes">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-title">Ver Solicitudes</div>
+                                <div class="action-description">Ver todas las solicitudes existentes en el sistema</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Solicitudes (oculto inicialmente) -->
+                    <div class="solicitudes-panel" id="solicitudesPanel" style="display: none;">
+                        <!-- Header del panel de solicitudes -->
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicio">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Solicitudes de Proveedores</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted" id="totalSolicitudes">0 solicitudes encontradas</span>
+                            </div>
+                        </div>
+
+                        <!-- Panel de Filtros -->
+                        <div class="filters-panel">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="filterEstado">Estado</label>
+                                    <select class="filter-select" id="filterEstado">
+                                        <option value="">Todos los estados</option>
+                                        <option value="creacion">📝 Creaciones</option>
+                                        <option value="actualizacion">✏️ Actualizaciones</option>
+                                        <option value="proceso">🔵 En Proceso</option>
+                                        <option value="finalizada">🟢 Finalizadas</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterGrupo">Grupo</label>
+                                    <select class="filter-select" id="filterGrupo">
+                                        <option value="">Todos los grupos</option>
+                                        <option value="008">008 - Rosario</option>
+                                        <option value="011">011</option>
+                                        <option value="005">005</option>
+                                        <option value="004">004</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterBusqueda">Buscar</label>
+                                    <input type="text" class="filter-input" id="filterBusqueda" 
+                                           placeholder="Proveedor, RFC...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de Solicitudes -->
+                        <div class="requests-table">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Proveedor</th>
+                                            <th>Contacto Compras</th>
+                                            <th>Grupo</th>
+                                            <th>Fecha/Hora</th>
+                                            <th>Tipo</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaSolicitudes">
+                                        <!-- Las solicitudes se cargan aquí -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Proveedores Activos (oculto inicialmente) -->
+                    <div class="proveedores-panel" id="proveedoresPanel" style="display: none;">
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicioProveedores">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Proveedores Activos</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted">Módulo en desarrollo</span>
+                            </div>
+                        </div>
+                        <div class="panel-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">👥</div>
+                                <h3>Proveedores Activos</h3>
+                                <p>Esta funcionalidad estará disponible próximamente</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Configuración (oculto inicialmente) -->
+                    <div class="configuracion-panel" id="configuracionPanel" style="display: none;">
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicioConfiguracion">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Configuración</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted">Módulo en desarrollo</span>
+                            </div>
+                        </div>
+                        <div class="panel-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">⚙️</div>
+                                <h3>Configuración</h3>
+                                <p>Esta funcionalidad estará disponible próximamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modal para Detalles -->
+        <div class="modal" id="modalDetalles">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h3>Detalles de Solicitud</h3>
+                    <button class="close">&times;</button>
+                </div>
+                <div class="modal-body" id="modalDetallesBody">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnCerrarModal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Crear Solicitud -->
+        <div class="modal" id="modalCrearSolicitud">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Crear Solicitud de Prueba</h3>
+                    <button class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputProveedor">Nombre del Proveedor *</label>
+                        <input type="text" class="form-control" id="inputProveedor" 
+                               placeholder="Ej: PROVEEDOR EJEMPLO SA DE CV" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRFC">RFC *</label>
+                        <input type="text" class="form-control" id="inputRFC" 
+                               placeholder="Ej: PES840101XXX" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="selectTipo">Tipo de Solicitud *</label>
+                            <select class="form-control" id="selectTipo" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="creacion">Creación</option>
+                                <option value="actualizacion">Actualización</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectEstado">Estado *</label>
+                            <select class="form-control" id="selectEstado" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="proceso">En Proceso</option>
+                                <option value="finalizada">Finalizada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectGrupo">Grupo de Compras *</label>
+                        <select class="form-control" id="selectGrupo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="008">008 - Rosario</option>
+                            <option value="011">011</option>
+                            <option value="005">005</option>
+                            <option value="004">004</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPersonaCompras">Persona de Compras</label>
+                        <input type="text" class="form-control" id="inputPersonaCompras" 
+                               placeholder="Nombre del contacto en compras">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnCancelarCrear">Cancelar</button>
+                    <button class="btn btn-warning" id="btnConfirmarCrear">Crear Solicitud</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/solicitudes.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+/* Sidebar Principal - CORREGIDO */
+.sidebar {
+    width: 280px;
+    background: var(--white);
+    border-right: 1px solid var(--gray-200);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 70px; /* CAMBIO: Ahora empieza después del navbar */
+    z-index: var(--z-sticky);
+    transform: translateX(0);
+    transition: transform var(--transition-normal);
+    /* QUITADO: padding-top: 70px; */
+}
+
+/* Header del Sidebar - CORREGIDO */
+.sidebar-header {
+    padding: var(--space-xl);
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--white);
+    /* QUITADO: position: absolute, top, left, right, height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+}
+
+/* Logo más grande en sidebar */
+.logo-container .company-logo {
+    height: 100px;
+    width: auto;
+}
+
+/* Nombre del área debajo del logo */
+.company-name {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+/* Nombre del área debajo del logo - DESTACADO */
+.company-area {
+    font-size: var(--font-size-base);
+    color: var(--gray-700); /* Color más oscuro */
+    font-weight: 600; /* Más negrita */
+    margin: 0;
+    text-transform: uppercase; /* Opcional: mayúsculas */
+    letter-spacing: 0.05em; /* Opcional: espaciado entre letras */
+}
+
+/* Menú de navegación - CORREGIDO */
+.nav-menu {
+    flex: 1;
+    padding: var(--space-lg) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    /* MARGEN NORMAL, no necesita ajuste */
+    overflow-y: auto;
+}
+
+.nav-item {
+    padding: var(--space-md) var(--space-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+    color: var(--gray-600);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.nav-item:hover {
+    background: var(--gray-50);
+    color: var(--gray-800);
+    border-left-color: var(--gray-300);
+}
+
+.nav-item.active {
+    background: var(--primary-blue);
+    color: var(--white);
+    border-left-color: var(--secondary-blue);
+}
+
+.nav-item.active:hover {
+    background: var(--secondary-blue);
+}
+
+/* Sidebar específico para admin */
+.admin-sidebar {
+    background: linear-gradient(180deg, var(--color-admin) 0%, #3730a3 100%);
+    border-right: none;
+}
+
+.admin-sidebar .sidebar-header {
+    background: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar .company-name {
+    color: var(--white);
+}
+
+.admin-sidebar .company-area {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-sidebar .nav-item {
+    color: rgba(255, 255, 255, 0.8);
+    border-left-color: transparent;
+}
+
+.admin-sidebar .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border-left-color: rgba(255, 255, 255, 0.3);
+}
+
+.admin-sidebar .nav-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    border-left-color: var(--white);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 300px;
+        box-shadow: var(--shadow-xl);
+        z-index: var(--z-modal);
+        top: 0; /* En móvil ocupa toda la pantalla */
+        height: 100vh;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-header {
+        padding: var(--space-lg);
+        height: 70px; /* En móvil necesita altura fija */
+        position: relative;
+    }
+    
+    .logo-container .company-logo {
+        height: 40px;
+    }
+    
+    .nav-item {
+        padding: var(--space-md) var(--space-lg);
+    }
+}

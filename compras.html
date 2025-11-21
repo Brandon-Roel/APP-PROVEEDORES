@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP - COMPRAS</title>
+    
+    <!-- CSS Base -->
+    <link rel="stylesheet" href="css/base/reset.css">
+    <link rel="stylesheet" href="css/base/variables.css">
+    <link rel="stylesheet" href="css/base/typography.css">
+    <link rel="stylesheet" href="css/base/utilities.css">
+    
+    <!-- CSS Components -->
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/sidebar.css">
+    <link rel="stylesheet" href="css/components/table.css">
+    <link rel="stylesheet" href="css/components/modal.css">
+    <link rel="stylesheet" href="css/components/forms.css">
+    <link rel="stylesheet" href="css/components/cards.css">
+    <link rel="stylesheet" href="css/components/filters.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    
+    <!-- CSS Layouts -->
+    <link rel="stylesheet" href="css/layouts/dashboard.css">
+    <link rel="stylesheet" href="css/layouts/admin.css">
+    
+    <!-- CSS Pages -->
+    <link rel="stylesheet" href="css/pages/welcome.css">
+    
+    <!-- CSS Utils -->
+    <link rel="stylesheet" href="css/utils/responsive.css">
+</head>
+<body class="admin-dashboard">
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-container">
+            <div class="welcome-logo">
+                <img src="assets/images/gonac.png" alt="Gonac Logo">
+            </div>
+            <div class="welcome-content">
+                <h1 id="welcomeMessage">Bienvenido</h1>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aplicación Principal (oculta inicialmente) -->
+    <div id="mainApp" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="header admin-header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>APP - COMPRAS</h1>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">Rosario Shadani Martinez Galvez</span>
+                    <div class="user-avatar" id="user-avatar">R</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layout Principal -->
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <nav class="sidebar admin-sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-container">
+                        <img src="assets/images/gonac.png" alt="Gonac" class="company-logo">
+                        <div class="company-area">COMPRAS</div>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-tab="inicio">
+                        🏠 Inicio
+                    </li>
+                    <li class="nav-item" data-tab="crear-solicitud">
+                        📝 Crear Solicitud
+                    </li>
+                    <li class="nav-item" data-tab="visualizar-solicitudes">
+                        👁️ Visualizar Solicitudes
+                    </li>
+                    <li class="nav-item" data-tab="configuracion">
+                        ⚙️ Configuración
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Contenido Principal -->
+            <main class="dashboard-main">
+                <div class="dashboard-content">
+                    <!-- Banner de Bienvenida -->
+                    <div class="welcome-banner">
+                        <div class="welcome-content">
+                            <h2 id="personalWelcomeTitle">¡Bienvenida Rosario Shadani Martinez Galvez!</h2>
+                            <p>Gestiona las solicitudes de proveedores y valida la información para enviar a datos maestros</p>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Acciones Principales (INICIO) -->
+                    <div class="main-actions-panel" id="mainActionsPanel">
+                        <div class="actions-grid">
+                            <button class="action-card" id="btnCrearSolicitudMain">
+                                <div class="action-icon">📝</div>
+                                <div class="action-title">Crear Solicitud</div>
+                                <div class="action-description">Crear solicitud en nombre del proveedor</div>
+                            </button>
+
+                            <button class="action-card" id="btnVisualizarSolicitudesMain">
+                                <div class="action-icon">👁️</div>
+                                <div class="action-title">Visualizar Solicitudes</div>
+                                <div class="action-description">Revisar y validar solicitudes de proveedores</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Crear Solicitud (oculto inicialmente) -->
+                    <div class="solicitudes-panel" id="crearSolicitudPanel" style="display: none;">
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicioCrear">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Alta de Proveedor - Crear Solicitud</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted">Complete todos los campos requeridos</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Información de Requisitos -->
+                        <div class="requisitos-section">
+                            <div class="requisitos-header">
+                                <h4>📋 REQUISITOS PARA EL ALTA DE PROVEEDOR</h4>
+                                <button class="btn btn-sm btn-outline" id="btnToggleRequisitos">Mostrar/Ocultar</button>
+                            </div>
+                            <div class="requisitos-content" id="requisitosContent">
+                                <div class="requisitos-grid">
+                                    <div class="requisito-item">
+                                        <strong>1.</strong> EL FORMULARIO DEBE SER LLENADO EN MAYÚSCULAS
+                                    </div>
+                                    <div class="requisito-item">
+                                        <strong>2.</strong> NO UTILIZAR CARACTERES ESPECIALES: ¡ ! " ' ( ) * ° { } ~ ^ Ñ , ; - :
+                                    </div>
+                                    <div class="requisito-item">
+                                        <strong>3.</strong> DOCUMENTACIÓN CON VIGENCIA NO MAYOR A 3 MESES
+                                    </div>
+                                </div>
+                                
+                                <div class="documentos-section">
+                                    <h5>📄 DOCUMENTOS REQUERIDOS:</h5>
+                                    <div class="documentos-grid">
+                                        <div class="tipo-documento">
+                                            <h6>PERSONA FÍSICA:</h6>
+                                            <ul>
+                                                <li>CONSTANCIA DE SITUACIÓN FISCAL</li>
+                                                <li>COMPROBANTE DE DOMICILIO</li>
+                                                <li>ESTADO DE CUENTA Y/O CARÁTULA BANCARIA</li>
+                                                <li>IDENTIFICACIÓN (INE)</li>
+                                                <li>OPINIÓN DE CUMPLIMIENTO</li>
+                                            </ul>
+                                        </div>
+                                        <div class="tipo-documento">
+                                            <h6>PERSONA MORAL:</h6>
+                                            <ul>
+                                                <li>CONSTANCIA DE SITUACIÓN FISCAL</li>
+                                                <li>ACTA CONSTITUTIVA PM</li>
+                                                <li>COMPROBANTE DE DOMICILIO</li>
+                                                <li>ESTADO DE CUENTA Y/O CARÁTULA BANCARIA</li>
+                                                <li>IDENTIFICACIÓN (INE)</li>
+                                                <li>OPINIÓN DE CUMPLIMIENTO</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario para crear solicitud -->
+                        <div class="form-container">
+                            <form id="formAltaProveedor">
+                                <!-- Sección 1: Información de Contacto -->
+                                <div class="form-section">
+                                    <h4>👥 INFORMACIÓN DE CONTACTO GONAC</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="contactoCompras">Contacto Compras Gonac *</label>
+                                            <select class="form-control" id="contactoCompras" required>
+                                                <option value="">Seleccionar grupo de compras...</option>
+                                                <option value="004">004</option>
+                                                <option value="005">005</option>
+                                                <option value="008">008</option>
+                                                <option value="009">009</option>
+                                                <option value="011">011</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="razonSocial">Nombre (s) / Razón Social *</label>
+                                            <input type="text" class="form-control uppercase-input" id="razonSocial" 
+                                                   placeholder="EJEMPLO SA DE CV" required maxlength="100">
+                                            <small class="form-help">Escriba en MAYÚSCULAS</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 2: Domicilio -->
+                                <div class="form-section">
+                                    <h4>🏠 DOMICILIO</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="calle">Calle *</label>
+                                            <input type="text" class="form-control uppercase-input" id="calle" 
+                                                   placeholder="AVENIDA PRINCIPAL" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="numeroExterior">Número Exterior</label>
+                                            <input type="text" class="form-control" id="numeroExterior" 
+                                                   placeholder="123">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="numeroInterior">Número Interior</label>
+                                            <input type="text" class="form-control" id="numeroInterior" 
+                                                   placeholder="A">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="colonia">Colonia *</label>
+                                            <input type="text" class="form-control uppercase-input" id="colonia" 
+                                                   placeholder="CENTRO" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="codigoPostal">Código Postal *</label>
+                                            <input type="text" class="form-control" id="codigoPostal" 
+                                                   placeholder="12345" pattern="[0-9]{5}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="municipio">Localidad, Municipio o Alcaldía *</label>
+                                            <input type="text" class="form-control uppercase-input" id="municipio" 
+                                                   placeholder="MUNICIPIO" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="pais">País *</label>
+                                            <input type="text" class="form-control uppercase-input" id="pais" 
+                                                   placeholder="MÉXICO" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="region">Región *</label>
+                                            <input type="text" class="form-control uppercase-input" id="region" 
+                                                   placeholder="NORTE" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 3: Información del Vendedor -->
+                                <div class="form-section">
+                                    <h4>👤 INFORMACIÓN DEL VENDEDOR</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="nombreVendedor">Nombre del Vendedor *</label>
+                                            <input type="text" class="form-control uppercase-input" id="nombreVendedor" 
+                                                   placeholder="JUAN PÉREZ" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telefono">Teléfono Local / Celular *</label>
+                                            <input type="tel" class="form-control" id="telefono" 
+                                                   placeholder="5512345678" pattern="[0-9]{10}" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="email">E-mail *</label>
+                                            <input type="email" class="form-control" id="email" 
+                                                   placeholder="proveedor@ejemplo.com" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="categoriaContacto">Categoría de Contacto *</label>
+                                            <select class="form-control" id="categoriaContacto" required>
+                                                <option value="">Seleccionar categoría...</option>
+                                                <option value="contabilidad">Contabilidad</option>
+                                                <option value="credito">Crédito y Cobranza</option>
+                                                <option value="cuentas">Cuentas por Pagar</option>
+                                                <option value="calidad">Calidad</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 4: Información Fiscal -->
+                                <div class="form-section">
+                                    <h4>📊 INFORMACIÓN FISCAL</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="tipoRFC">Tipo de RFC *</label>
+                                            <select class="form-control" id="tipoRFC" required>
+                                                <option value="">Seleccionar tipo...</option>
+                                                <option value="fisica">Persona Física</option>
+                                                <option value="moral">Persona Moral</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rfc">RFC *</label>
+                                            <input type="text" class="form-control uppercase-input" id="rfc" 
+                                                   placeholder="XAXX010101000" pattern="[A-Z&Ñ]{3,4}[0-9]{6}[A-Z0-9]{3}" 
+                                                   required maxlength="13">
+                                            <small class="form-help">Formato: 12 o 13 caracteres alfanuméricos</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 5: Información Bancaria -->
+                                <div class="form-section">
+                                    <h4>🏦 INFORMACIÓN BANCARIA</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="paisBanco">País del Banco *</label>
+                                            <input type="text" class="form-control uppercase-input" id="paisBanco" 
+                                                   placeholder="MÉXICO" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="claveBanco">Clave del Banco *</label>
+                                            <input type="text" class="form-control" id="claveBanco" 
+                                                   placeholder="012" pattern="[0-9]{3}" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="cuentaClabe">Cuenta CLABE *</label>
+                                            <input type="text" class="form-control" id="cuentaClabe" 
+                                                   placeholder="012180000000000001" pattern="[0-9]{18}" required>
+                                            <small class="form-help">18 dígitos</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="titularCuenta">Titular de la Cuenta *</label>
+                                            <input type="text" class="form-control uppercase-input" id="titularCuenta" 
+                                                   placeholder="NOMBRE DEL TITULAR" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="moneda">Moneda *</label>
+                                            <select class="form-control" id="moneda" required>
+                                                <option value="">Seleccionar moneda...</option>
+                                                <option value="MXN">MXN - Peso Mexicano</option>
+                                                <option value="USD">USD - Dólar Americano</option>
+                                                <option value="EUR">EUR - Euro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 6: Condiciones Comerciales -->
+                                <div class="form-section">
+                                    <h4>💰 CONDICIONES COMERCIALES</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="condicionPago">Condición de Pago *</label>
+                                            <select class="form-control" id="condicionPago" required>
+                                                <option value="">Seleccionar condición...</option>
+                                                <option value="contado">Contado</option>
+                                                <option value="15dias">15 días</option>
+                                                <option value="30dias">30 días</option>
+                                                <option value="45dias">45 días</option>
+                                                <option value="60dias">60 días</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="plazoEntrega">Plazo de Entrega Previsto (En días) *</label>
+                                            <input type="number" class="form-control" id="plazoEntrega" 
+                                                   placeholder="5" min="1" max="365" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="grupoTesoreria">Grupo de Tesorería *</label>
+                                            <input type="text" class="form-control uppercase-input" id="grupoTesoreria" 
+                                                   placeholder="GRUPO A" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="viasPago">Vías de Pago *</label>
+                                            <select class="form-control" id="viasPago" required>
+                                                <option value="">Seleccionar vía...</option>
+                                                <option value="transferencia">Transferencia Electrónica</option>
+                                                <option value="cheque">Cheque</option>
+                                                <option value="efectivo">Efectivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 7: Retención de Impuestos -->
+                                <div class="form-section">
+                                    <h4>🧾 RETENCIÓN DE IMPUESTOS</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="llevaRetencion">Lleva Retención de Impuesto *</label>
+                                            <select class="form-control" id="llevaRetencion" required>
+                                                <option value="">Seleccionar...</option>
+                                                <option value="si">SI</option>
+                                                <option value="no">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Campos condicionales para retención -->
+                                    <div id="camposRetencion" style="display: none;">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="tipoRetencion">Tipo de Retención de Impuestos *</label>
+                                                <select class="form-control" id="tipoRetencion">
+                                                    <option value="">Seleccionar tipo...</option>
+                                                    <option value="iva">IVA</option>
+                                                    <option value="isr">ISR</option>
+                                                    <option value="ieps">IEPS</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="indicadorRetencion">Indicador de Retención *</label>
+                                                <input type="text" class="form-control" id="indicadorRetencion" 
+                                                       placeholder="Ej: 0.10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 8: Comentarios y Documentos -->
+                                <div class="form-section">
+                                    <h4>📎 COMENTARIOS Y DOCUMENTOS</h4>
+                                    <div class="form-group">
+                                        <label for="comentarios">Comentarios del Proveedor</label>
+                                        <textarea class="form-control" id="comentarios" 
+                                                  placeholder="Comentarios adicionales..." 
+                                                  rows="3"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Datos Adjuntos *</label>
+                                        <div class="file-upload-area" id="fileUploadArea">
+                                            <div class="upload-placeholder">
+                                                <div class="upload-icon">📎</div>
+                                                <p>Arrastra tus archivos aquí o haz clic para seleccionar</p>
+                                                <span class="text-sm">Formatos: PDF, JPG, PNG (Máx. 10MB por archivo)</span>
+                                            </div>
+                                            <input type="file" id="fileUpload" multiple accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                                        </div>
+                                        <div class="uploaded-files" id="uploadedFiles">
+                                            <!-- Archivos subidos aparecerán aquí -->
+                                        </div>
+                                        <small class="form-help">Suba todos los documentos requeridos según su tipo de persona</small>
+                                    </div>
+                                </div>
+
+                                <!-- Botones de acción -->
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="btnCancelarFormulario">Cancelar</button>
+                                    <button type="submit" class="btn btn-warning">Enviar Solicitud de Alta</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Visualizar Solicitudes (oculto inicialmente) -->
+                    <div class="solicitudes-panel" id="visualizarSolicitudesPanel" style="display: none;">
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicioVisualizar">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Visualizar Solicitudes de Proveedores</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted" id="totalSolicitudesCompras">0 solicitudes encontradas</span>
+                            </div>
+                        </div>
+
+                        <!-- Filtros para solicitudes -->
+                        <div class="filters-panel">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="filterEstadoCompras">Estado</label>
+                                    <select class="filter-select" id="filterEstadoCompras">
+                                        <option value="">Todos los estados</option>
+                                        <option value="pendiente">🟡 Pendiente</option>
+                                        <option value="revision">🔵 En Revisión</option>
+                                        <option value="validado">🟢 Validado</option>
+                                        <option value="rechazado">🔴 Rechazado</option>
+                                        <option value="enviado-dm">📤 Enviado a Datos Maestros</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterTipoCompras">Tipo</label>
+                                    <select class="filter-select" id="filterTipoCompras">
+                                        <option value="">Todos los tipos</option>
+                                        <option value="fisica">Persona Física</option>
+                                        <option value="moral">Persona Moral</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filterBusquedaCompras">Buscar</label>
+                                    <input type="text" class="filter-input" id="filterBusquedaCompras" 
+                                           placeholder="Proveedor, RFC, ID...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de solicitudes -->
+                        <div class="requests-table">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Proveedor</th>
+                                            <th>RFC</th>
+                                            <th>Tipo</th>
+                                            <th>Fecha Solicitud</th>
+                                            <th>Estado</th>
+                                            <th>Documentos</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaSolicitudesCompras">
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted">
+                                                No se encontraron solicitudes
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Configuración (oculto inicialmente) -->
+                    <div class="configuracion-panel" id="configuracionPanel" style="display: none;">
+                        <div class="panel-header">
+                            <button class="btn btn-secondary" id="btnVolverInicioConfiguracion">
+                                ← Volver al Inicio
+                            </button>
+                            <h3 class="panel-title">Configuración</h3>
+                            <div class="panel-actions">
+                                <span class="text-muted">Ajustes del sistema</span>
+                            </div>
+                        </div>
+                        <div class="panel-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">⚙️</div>
+                                <h3>Configuración</h3>
+                                <p>Esta funcionalidad estará disponible próximamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modal para Detalles de Solicitud -->
+        <div class="modal" id="modalDetallesSolicitud">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h3>Detalles de Solicitud - Compras</h3>
+                    <button class="close">&times;</button>
+                </div>
+                <div class="modal-body" id="modalDetallesSolicitudBody">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnCerrarModalSolicitud">Cerrar</button>
+                    <button class="btn btn-warning" id="btnValidarSolicitud">Validar y Enviar a Datos Maestros</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Rechazar Solicitud -->
+        <div class="modal" id="modalRechazarSolicitud">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Rechazar Solicitud</h3>
+                    <button class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="motivoRechazo">Motivo del Rechazo *</label>
+                        <textarea class="form-control" id="motivoRechazo" 
+                                  placeholder="Describe el motivo del rechazo..." 
+                                  rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnCancelarRechazo">Cancelar</button>
+                    <button class="btn btn-danger" id="btnConfirmarRechazo">Confirmar Rechazo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/compras.js"></script>
+    <script src="js/app-compras.js"></script>
+</body>
+</html>
