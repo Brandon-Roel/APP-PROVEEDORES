@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Proveedores - Gonac</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .logo h1 {
+            color: #333;
+            margin-top: 15px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .welcome-text {
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .welcome-text p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .apps-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .app-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .app-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .app-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .footer {
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* Colores específicos para cada app */
+        .app-card[data-app="datosmaestros"] {
+            border-left: 4px solid #4f46e5;
+        }
+
+        .app-card[data-app="datosmaestros"]:hover {
+            border-color: #4f46e5;
+        }
+
+        .app-card[data-app="proveedores"] {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .app-card[data-app="proveedores"]:hover {
+            border-color: #f59e0b;
+        }
+
+        .app-card[data-app="compras"] {
+            border-left: 4px solid #10b981;
+        }
+
+        .app-card[data-app="compras"]:hover {
+            border-color: #10b981;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .welcome-text h2 {
+                font-size: 24px;
+            }
+            
+            .app-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="assets/images/gonac.png" alt="Gonac Logo" onerror="this.style.display='none'">
+            <h1>Sistema de Proveedores</h1>
+        </div>
+
+        <div class="welcome-text">
+            <h2>¡Bienvenido!</h2>
+            <p>Selecciona el área a la que deseas ingresar</p>
+        </div>
+
+        <div class="apps-grid">
+            <div class="app-card" data-app="datosmaestros" onclick="redirectTo('datosmaestros.html')">
+                <div class="app-icon">📊</div>
+                <div class="app-title">Datos Maestros</div>
+                <div class="app-description">
+                    Administración central del sistema de proveedores. 
+                    Gestiona y supervisa todas las solicitudes.
+                </div>
+            </div>
+
+            <div class="app-card" data-app="proveedores" onclick="redirectTo('proveedores.html')">
+                <div class="app-icon">👥</div>
+                <div class="app-title">Área de Proveedores</div>
+                <div class="app-description">
+                    Espacio para proveedores. Crea solicitudes y da 
+                    seguimiento a tu proceso de alta.
+                </div>
+            </div>
+
+            <div class="app-card" data-app="compras" onclick="redirectTo('compras.html')">
+                <div class="app-icon">🛒</div>
+                <div class="app-title">Área de Compras</div>
+                <div class="app-description">
+                    Validación y gestión de solicitudes de proveedores. 
+                    Revisa documentación y envía a datos maestros.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Gonac - Sistema Integral de Proveedores</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(app) {
+            // Mostrar mensaje de carga
+            const card = event.currentTarget;
+            const originalContent = card.innerHTML;
+            
+            card.innerHTML = `
+                <div class="app-icon">⏳</div>
+                <div class="app-title">Cargando...</div>
+                <div class="app-description">Redirigiendo a la aplicación</div>
+            `;
+            
+            card.style.opacity = '0.7';
+            card.style.cursor = 'wait';
+            
+            // Redirigir después de un breve delay para mejor UX
+            setTimeout(() => {
+                window.location.href = app;
+            }, 500);
+        }
+
+        // Detectar si estamos en un entorno local para mostrar advertencia
+        if (window.location.protocol === 'file:') {
+            console.log('Modo local detectado - Asegúrate de tener un servidor local para las redirecciones');
+        }
+
+        // Efecto hover mejorado
+        document.querySelectorAll('.app-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
